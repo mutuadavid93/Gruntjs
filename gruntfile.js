@@ -27,6 +27,26 @@ module.exports = function (grunt) {
             }
       }, //sass
       
+      bower_concat: {
+        all: {
+            dest: {
+                js: 'builds/development/js/_bower.js',
+                css: 'builds/development/css/_bower.css'
+            },
+            exclude: [
+                'jquery'
+            ]
+        }
+    },
+      
+      wiredep: {
+          task: {
+              src: [
+                  'builds/development/**/*.html'
+              ]
+          }
+      }, //wiredep
+      
       connect: {
           server: {
               options: {
@@ -60,8 +80,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-wiredep');
+  grunt.loadNpmTasks('grunt-bower-concat');
   
   //Default task
-  grunt.registerTask('default', ['concat', 'sass', 'connect', 'watch']);
+  grunt.registerTask('default', ['wiredep','bower_concat', 'concat', 'sass', 'connect', 'watch']);
   
 };//wrapper
